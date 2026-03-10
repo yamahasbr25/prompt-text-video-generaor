@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Prompt POV Satwa Liar Ilmiah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #e5e5e5;
+        }
+        
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #171717; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #404040; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #525252; 
+        }
+
+        .glass-panel {
+            background: rgba(24, 24, 27, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(63, 63, 70, 0.5);
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8">
+
+    <div class="max-w-6xl mx-auto space-y-6">
+        
+        <!-- Header -->
+        <header class="glass-panel p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4 border-l-4 border-l-emerald-500">
+            <div>
+                <h1 class="text-2xl font-bold text-emerald-400 flex items-center gap-2">
+                    <i data-lucide="microscope" class="w-7 h-7"></i>
+                    Sistem Generator POV Riset Serangga
+                </h1>
+                <p class="text-zinc-400 mt-1 text-sm md:text-base">Hasilkan 6 blok prompt dokumenter eksperimental sesuai protokol kamera mikro.</p>
+            </div>
+            <div class="flex items-center gap-2 text-xs font-mono bg-zinc-900 px-3 py-2 rounded-lg border border-zinc-700 text-zinc-400">
+                <i data-lucide="shield-alert" class="w-4 h-4 text-amber-500"></i>
+                <span>STATUS: <span class="text-emerald-500">AKTIF</span></span>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- Sidebar / Controls -->
+            <div class="lg:col-span-4 space-y-6">
+                <!-- Module A -->
+                <div class="glass-panel p-5 rounded-2xl">
+                    <h2 class="text-lg font-semibold text-white mb-4 flex items-center gap-2 border-b border-zinc-700 pb-2">
+                        <i data-lucide="bug" class="w-5 h-5 text-emerald-400"></i>
+                        MODUL A: Subjek
+                    </h2>
+                    <label class="block text-sm font-medium text-zinc-400 mb-2">Pilih Spesies (Katalog 15 Hewan Tanah):</label>
+                    <div class="relative">
+                        <select id="animalSelect" class="w-full bg-zinc-900 border border-zinc-700 text-white rounded-lg pl-3 pr-10 py-3 appearance-none focus:outline-none focus:ring-2 focus:ring-emerald-500 transition cursor-pointer font-medium">
+                            <option value="" disabled selected>-- Pilih Subjek Riset --</option>
+                            <option value="Leafcutter Ant">1. Semut Pemotong Daun (Leafcutter Ant)</option>
+                            <option value="Rhinoceros Beetle">2. Kumbang Badak (Rhinoceros Beetle)</option>
+                            <option value="Giant African Millipede">3. Kaki Seribu Raksasa (Giant African Millipede)</option>
+                            <option value="Mole Cricket">4. Anjing Tanah (Mole Cricket)</option>
+                            <option value="Trapdoor Spider">5. Laba-laba Trapdoor (Trapdoor Spider)</option>
+                            <option value="Emperor Scorpion">6. Kalajengking Kaisar (Emperor Scorpion)</option>
+                            <option value="Hissing Cockroach">7. Kecoak Madagaskar (Hissing Cockroach)</option>
+                            <option value="Tiger Beetle">8. Kumbang Macan (Tiger Beetle)</option>
+                            <option value="Trap-jaw Ant">9. Semut Rahang-perangkap (Trap-jaw Ant)</option>
+                            <option value="Pill Bug">10. Kutu Kayu / Pill Bug (Roly-poly)</option>
+                            <option value="Giant Earwig">11. Cocopet Raksasa (Giant Earwig)</option>
+                            <option value="Jerusalem Cricket">12. Jangkrik Jerusalem (Jerusalem Cricket)</option>
+                            <option value="Velvet Worm">13. Cacing Beludru (Velvet Worm)</option>
+                            <option value="Wolf Spider">14. Laba-laba Serigala (Wolf Spider)</option>
+                            <option value="Dung Beetle">15. Kumbang Kotoran (Dung Beetle)</option>
+                        </select>
+                        <i data-lucide="chevron-down" class="absolute right-3 top-3.5 w-5 h-5 text-zinc-400 pointer-events-none"></i>
+                    </div>
+
+                    <button id="generateBtn" disabled class="w-full mt-6 bg-emerald-600 hover:bg-emerald-500 disabled:bg-zinc-800 disabled:text-zinc-500 disabled:cursor-not-allowed text-white font-bold py-3 px-4 rounded-lg transition-all flex items-center justify-center gap-2">
+                        <i data-lucide="cpu" class="w-5 h-5"></i>
+                        Jalankan Mesin Prompt
+                    </button>
+                </div>
+
+                <!-- Global Rules Reminder -->
+                <div class="glass-panel p-5 rounded-2xl border-l-4 border-l-amber-500">
+                    <h3 class="text-sm font-bold text-amber-500 mb-2 flex items-center gap-2">
+                        <i data-lucide="alert-triangle" class="w-4 h-4"></i> Aturan Ketat (Global)
+                    </h3>
+                    <ul class="text-xs text-zinc-400 space-y-1.5 list-disc pl-4">
+                        <li>Kamera dipasang di punggung/toraks subjek.</li>
+                        <li>Orientasi Video <strong>Vertical 9:16</strong>.</li>
+                        <li>Gerakan kamera mutlak mengikuti gerakan tubuh.</li>
+                        <li>Hanya menggunakan lampu LED mikro di bawah tanah.</li>
+                        <li>Tidak ada transisi sinematik, efek cahaya berlebih, atau <em>drone simulation</em>.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Content / Output -->
+            <div class="lg:col-span-8 space-y-4" id="outputContainer" style="display: none;">
+                
+                <div class="flex items-center justify-between mb-2">
+                    <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i data-lucide="file-terminal" class="w-6 h-6 text-emerald-400"></i>
+                        MODUL B: Hasil Prompt
+                    </h2>
+                    <button id="copyAllBtn" class="bg-zinc-800 hover:bg-zinc-700 text-white text-sm py-2 px-4 rounded-lg transition flex items-center gap-2 border border-zinc-600">
+                        <i data-lucide="copy" class="w-4 h-4"></i> Salin Semua
+                    </button>
+                </div>
+
+                <!-- Negative Prompt -->
+                <div class="bg-red-950/30 border border-red-900/50 rounded-xl p-4">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-sm font-bold text-red-400 flex items-center gap-2">
+                            <i data-lucide="shield-off" class="w-4 h-4"></i> Negative Prompt (Gunakan untuk semua generasi)
+                        </h3>
+                        <button onclick="copyText('negativePrompt')" class="text-zinc-400 hover:text-white transition" title="Salin Negative Prompt">
+                            <i data-lucide="copy" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <textarea id="negativePrompt" readonly class="w-full bg-black/50 border border-zinc-800 rounded-lg p-3 text-sm font-mono text-zinc-300 h-20 resize-none focus:outline-none">cinematic lighting, drone shot, floating camera, magical glow, stylized grading, background music, smooth stabilization, exaggerated depth of field, non-diegetic light, fantasy logic, detached camera</textarea>
+                </div>
+
+                <!-- Prompts Container (Generated via JS) -->
+                <div id="blocksContainer" class="space-y-4">
+                    <!-- Blocks will be injected here -->
+                </div>
+
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="lg:col-span-8 glass-panel rounded-2xl flex flex-col items-center justify-center p-12 text-center border-dashed">
+                <i data-lucide="search" class="w-16 h-16 text-zinc-600 mb-4"></i>
+                <h3 class="text-xl font-semibold text-zinc-300 mb-2">Menunggu Inisialisasi</h3>
+                <p class="text-zinc-500 max-w-md">Pilih subjek hewan dari panel sebelah kiri dan jalankan mesin untuk memproses prompt eksperimental.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 transform translate-y-20 opacity-0 transition-all duration-300 bg-emerald-600 text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-3 z-50">
+        <i data-lucide="check-circle" class="w-5 h-5"></i>
+        <span id="toastMessage" class="font-medium">Tersalin ke clipboard!</span>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        const animalSelect = document.getElementById('animalSelect');
+        const generateBtn = document.getElementById('generateBtn');
+        const outputContainer = document.getElementById('outputContainer');
+        const emptyState = document.getElementById('emptyState');
+        const blocksContainer = document.getElementById('blocksContainer');
+        const copyAllBtn = document.getElementById('copyAllBtn');
+
+        // Enable button when animal is selected
+        animalSelect.addEventListener('change', () => {
+            if (animalSelect.value) {
+                generateBtn.disabled = false;
+                generateBtn.classList.remove('opacity-50');
+            }
+        });
+
+        // Prompt Templates based on the TXT rules
+        const getPrompts = (animal) => [
+            {
+                id: "block01",
+                title: "BLOCK 01 — IMAGE PROMPT (SURFACE PREPARATION)",
+                desc: "Foto makro persiapan di permukaan tanah.",
+                text: `Ultra-realistic macro wildlife photograph. Vertical 9:16. A human is seated near a dirt nest entrance. A ${animal} is gently held between human fingers. The other hand carefully adjusts a miniature scientific research camera. The camera is mechanically secured to the ${animal}'s upper dorsal body (thorax/back) using a clearly visible micro-harness. The camera appears physically tiny, realistic, and matches real-world scale accurately. The environment matches the ${animal}'s natural habitat. Natural daylight illuminates the scene. Style reference: Field-recorded scientific wildlife macro photography. No cinematic lighting, no stylized visuals.`
+            },
+            {
+                id: "block02",
+                title: "BLOCK 02 — MOTION PROMPT (POV ENGAGEMENT)",
+                desc: "Penempatan hewan dan transisi masuk ke dalam lubang.",
+                text: `Motion video, Vertical 9:16. Camera adjustment completed. The ${animal} is placed on the ground facing the viewer. Brief stillness where the frame remains completely stable. The ${animal} then physically turns its head and body toward the burrow entrance. The camera frame rotates ONLY as a result of this body turn, clearly readable as: head turn -> body alignment -> full frame rotation. Once aligned, the ${animal} begins forward movement toward the hole. Subtle vibration from footsteps confirms body-mounted POV. 5-10% of the ${animal}'s body remains visible at frame bottom at all times. As it reaches the entrance, its body lowers naturally and enters head-first. At the moment of entry, the camera lens and a compact LED research light are oriented forward into the hole. Surface light rapidly fades. The LED activates automatically only after surface light disappears. 8 seconds. Raw observational research material.`
+            },
+            {
+                id: "block03",
+                title: "BLOCK 03 — MOTION PROMPT (TUNNEL ENTRY)",
+                desc: "Perjalanan di dalam terowongan tanah sempit.",
+                text: `Motion video, Vertical 9:16. Direct continuation. Fully mounted POV. 5-10% of the ${animal}'s body remains visible at frame bottom. Tight subterranean tunnel geometry. Soil texture is harshly revealed by a compact LED research light with a tight beam spread and uneven falloff. Rapid darkness outside the beam. Wall contact near the lens causes falling micro-particles of dirt. Continuous minor vibration from ${animal} movement. Passing colony member contact causes a brief shake. Physically plausible light absorption. 8 seconds. No cinematic smoothing.`
+            },
+            {
+                id: "block04",
+                title: "BLOCK 04 — MOTION PROMPT (COLONY EXPANSION)",
+                desc: "Masuk ke ruang koloni besar dan terstruktur.",
+                text: `Motion video, Vertical 9:16. The tunnel opens into a major chamber. Fully mounted POV on the ${animal}. Frame angle changes only via the animal's natural posture. Dense ${animal} colony movement and structured traffic flow. Interconnected tunnel networks visible in the background fading into absolute darkness. Eggs and larvae visible on the moist soil surface. Worker food transport activity. Harsh LED reflections on moist soil regions. Continuous organized movement. 8 seconds. No break, raw scientific documentary style.`
+            },
+            {
+                id: "block05",
+                title: "BLOCK 05 — MOTION PROMPT (BIOLOGICAL DETAIL ZONE)",
+                desc: "Interaksi dengan area telur/larva.",
+                text: `Motion video, Vertical 9:16. Approach to the egg chamber. The camera lowers naturally as the ${animal} adjusts its posture. Egg clusters and pupae are illuminated by the tight LED beam. Larvae movement is clearly visible in the dirt. Worker interaction occurs; a minor collision with another ${animal} causes a brief, realistic jolt/shake in the camera frame. Depth fades into harsh darkness outside the narrow LED beam. 8 seconds.`
+            },
+            {
+                id: "block06",
+                title: "BLOCK 06 — MOTION PROMPT (CORE CHAMBER)",
+                desc: "Pusat sarang dan aktivitas utama koloni.",
+                text: `Motion video, Vertical 9:16. Entry into the central colony zone. Dome-like soil structures overhead. Heavy traffic activity of hundreds of same-species individuals. Food reserves and organic debris scattered. Coordinated biological behavior. The LED scan follows the ${animal}'s head movement rigidly. The frame pauses completely when the animal stands still. Audio consists only of natural micro-sounds: footsteps, soil friction, scratching, and organic movement. 8 seconds. Continuous, uncut.`
+            }
+        ];
+
+        // Generate Content
+        generateBtn.addEventListener('click', () => {
+            const selectedAnimal = animalSelect.value;
+            const prompts = getPrompts(selectedAnimal);
+            
+            blocksContainer.innerHTML = ''; // Clear previous
+
+            prompts.forEach((prompt, index) => {
+                const blockHTML = `
+                    <div class="glass-panel rounded-xl overflow-hidden border border-zinc-700/50">
+                        <div class="bg-zinc-800/80 px-4 py-3 border-b border-zinc-700 flex justify-between items-center">
+                            <div>
+                                <h3 class="font-bold text-emerald-400 text-sm">${prompt.title}</h3>
+                                <p class="text-xs text-zinc-400 mt-0.5">${prompt.desc}</p>
+                            </div>
+                            <button onclick="copyText('${prompt.id}')" class="text-zinc-400 hover:text-white transition flex-shrink-0 bg-zinc-700/50 p-2 rounded-md hover:bg-zinc-600" title="Salin Block">
+                                <i data-lucide="copy" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                        <div class="p-4">
+                            <textarea id="${prompt.id}" readonly class="w-full bg-transparent text-sm font-mono text-zinc-300 resize-none focus:outline-none" style="height: 160px;">${prompt.text}</textarea>
+                        </div>
+                    </div>
+                `;
+                blocksContainer.innerHTML += blockHTML;
+            });
+
+            // Re-initialize icons for new elements
+            lucide.createIcons();
+
+            // UI Transitions
+            emptyState.style.display = 'none';
+            outputContainer.style.display = 'block';
+        });
+
+        // Copy Function
+        window.copyText = function(elementId) {
+            const textarea = document.getElementById(elementId);
+            textarea.select();
+            document.execCommand('copy');
+            
+            // Clear selection
+            window.getSelection().removeAllRanges();
+            
+            showToast("Prompt berhasil disalin!");
+        };
+
+        // Copy All Function
+        copyAllBtn.addEventListener('click', () => {
+            const selectedAnimal = animalSelect.value;
+            const prompts = getPrompts(selectedAnimal);
+            
+            let allText = `=== NEGATIVE PROMPT ===\ncinematic lighting, drone shot, floating camera, magical glow, stylized grading, background music, smooth stabilization, exaggerated depth of field, non-diegetic light, fantasy logic, detached camera\n\n`;
+            
+            prompts.forEach(p => {
+                allText += `=== ${p.title} ===\n${p.text}\n\n`;
+            });
+
+            // Hacky way to copy raw text not in DOM
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = allText;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+
+            showToast("Seluruh prompt disalin!");
+        });
+
+        // Toast Notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').innerText = message;
+            
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sora Prompt Builder Pro</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;background:#0f172a;color:#e5e7eb;margin:0;padding:30px}
+.container{max-width:1000px;margin:auto}
+.card{background:#111827;border-radius:14px;padding:24px;margin-bottom:20px;box-shadow:0 10px 25px rgba(0,0,0,0.3)}
+select,button{width:100%;padding:10px;margin-top:10px;border-radius:8px;border:none;font-size:14px}
+select{background:#1f2937;color:#fff}
+button{cursor:pointer}
+.generate{background:#2563eb;color:white}
+.copy{background:#10b981;color:white;margin-top:10px}
+.random{background:#f59e0b;color:white;margin-top:10px}
+textarea{width:100%;height:340px;margin-top:10px;background:#020617;color:#22c55e;border-radius:10px;padding:10px;border:none;font-family:monospace}
+h1{margin-bottom:10px}
+label{font-weight:bold;margin-top:10px;display:block}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Sora Prompt Builder PRO</h1>
+<p>Configure your cinematic AI video prompt. Character remains fixed.</p>
+
+<div class="card">
+
+<label>Location</label>
+<select id="location">
+<option value="a desert military airbase runway">Military Airbase Runway</option>
+<option value="the flight deck of a large aircraft carrier at sea">Aircraft Carrier Flight Deck</option>
+<option value="a coastal military airstrip near the ocean">Coastal Airbase</option>
+<option value="a remote desert forward operating airstrip">Forward Desert Airstrip</option>
+<option value="a large desert military base">Desert Base</option>
+<option value="a frozen arctic military airbase surrounded by snow">Snow Base</option>
+<option value="a jungle military airstrip surrounded by dense tropical forest">Jungle Base</option>
+<option value="a modern military base near a large city skyline">City Military Base</option>
+</select>
+
+<label>Background Military Equipment</label>
+<select id="vehicle">
+<option value="stealth fighter jets similar to F-35 class">F-35 style</option>
+<option value="advanced stealth fighters similar to F-22 Raptor">F-22 Raptor style</option>
+<option value="modern fighter jets similar to F-16 class">F-16 style</option>
+<option value="european multirole fighters similar to Eurofighter Typhoon">Eurofighter Typhoon style</option>
+<option value="modern fighters similar to Saab Gripen">Saab Gripen style</option>
+<option value="russian fighters similar to MiG-29">MiG-29 style</option>
+<option value="modern multirole jets similar to Su-35">Su-35 style</option>
+<option value="stealth fighters similar to Chinese J-20">J-20 style</option>
+<option value="modern fighter jets similar to Rafale">Rafale style</option>
+<option value="modern main battle tanks lined up">Battle Tanks</option>
+<option value="large mobile missile launcher trucks">Missile Launcher Trucks</option>
+<option value="a mixed fleet of fighter jets, tanks and missile trucks">Mixed Military Fleet</option>
+</select>
+
+<label>Camera Movement</label>
+<select id="camera">
+<option value="a handheld selfie 360 degree spin">Selfie Spin</option>
+<option value="a handheld walking vlog style movement">Walking Vlog</option>
+<option value="a cinematic drone reveal moving upward and outward">Drone Reveal</option>
+</select>
+
+<label>Video Duration</label>
+<select id="duration">
+<option value="5">5 seconds</option>
+<option value="8">8 seconds</option>
+<option value="12">12 seconds</option>
+<option value="15">15 seconds</option>
+</select>
+
+<label>Visual Style</label>
+<select id="style">
+<option value="cinematic photorealistic film look">Cinematic</option>
+<option value="realistic war documentary style">War Documentary</option>
+<option value="high budget hollywood action movie style">Hollywood Action</option>
+</select>
+
+<label>Atmosphere</label>
+<select id="mood">
+<option value="high-energy cinematic documentary atmosphere">High Energy</option>
+<option value="epic patriotic cinematic atmosphere">Epic Patriotic</option>
+<option value="tense military readiness atmosphere">Military Readiness</option>
+<option value="calm but powerful cinematic documentary mood">Calm Documentary</option>
+</select>
+
+<button class="generate" onclick="generateJSON()">Generate JSON Prompt</button>
+<button class="random" onclick="randomPrompt()">🎲 Random Viral Prompt</button>
+
+</div>
+
+<div class="card">
+<label>Generated JSON</label>
+<textarea id="output"></textarea>
+<button class="copy" onclick="copyJSON()">Copy JSON</button>
+</div>
+
+</div>
+
+<script>
+
+function generateJSON(){
+
+const location=document.getElementById('location').value
+const vehicle=document.getElementById('vehicle').value
+const camera=document.getElementById('camera').value
+const mood=document.getElementById('mood').value
+const duration=document.getElementById('duration').value
+const style=document.getElementById('style').value
+
+const json={
+
+metadata:{
+  title:"Cinematic Military Selfie Scene",
+  generator:"Sora Prompt Builder Pro"
+},
+
+video_analysis:{
+
+subject:"A young woman with long brown hair and glasses wearing a cropped olive green tactical military shirt and a lightweight tactical headset",
+
+setting:location,
+
+background_elements:"A long row of "+vehicle+" positioned behind her with small silhouettes of military personnel and support vehicles",
+
+camera_movement:camera,
+
+atmosphere:mood
+
+},
+
+ai_generation_prompt:{
+
+text_to_video_prompt:"Cinematic handheld selfie POV video of a young woman with long brown hair and glasses wearing a cropped olive green tactical shirt and headset. She smiles confidently while the camera performs "+camera+". The scene takes place at "+location+". Behind her there is a lineup of "+vehicle+" under bright natural sunlight. The visual style is "+style+". Photorealistic textures, realistic skin detail, cinematic lighting, subtle motion blur, high detail environment, professional color grading.",
+
+negative_prompt:"blurry, low resolution, distorted faces, cartoon style, anime style, indoor environment, unrealistic proportions, heavy artifacts, logos, text overlays",
+
+technical_specs:{
+
+aspect_ratio:"9:16",
+
+resolution:"4K",
+
+frame_rate:"30fps",
+
+style:style,
+
+duration_seconds:Number(duration)
+
+}
+
+}
+
+}
+
+const formatted=JSON.stringify(json,null,2)
+
+document.getElementById('output').value=formatted
+
+}
+
+
+function copyJSON(){
+
+const text=document.getElementById('output')
+
+text.select()
+
+document.execCommand('copy')
+
+alert('JSON copied!')
+
+}
+
+
+function randomPrompt(){
+
+const selects=document.querySelectorAll('select')
+
+selects.forEach(select=>{
+
+const randomIndex=Math.floor(Math.random()*select.options.length)
+
+select.selectedIndex=randomIndex
+
+})
+
+generateJSON()
+
+}
+
+</script>
+
+</body>
+</html>

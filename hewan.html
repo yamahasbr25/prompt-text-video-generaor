@@ -26,6 +26,16 @@ label{font-weight:bold;margin-top:12px;display:block}
 
 <div class="card">
 
+<label>Character Clothing</label>
+<select id="clothing">
+<option value="an olive green tank top">Tank Top</option>
+<option value="a lightweight jungle explorer shirt">Explorer Shirt</option>
+<option value="a sleeveless adventure vest">Adventure Vest</option>
+<option value="a fitted outdoor t-shirt">Outdoor T‑Shirt</option>
+<option value="a safari style shirt with rolled sleeves">Safari Shirt</option>
+<option value="a rugged jungle survival top">Survival Top</option>
+</select>
+
 <label>Forest Location</label>
 <select id="location">
 <option value="a dense tropical rainforest with tall trees and thick vegetation">Tropical Rainforest</option>
@@ -147,6 +157,7 @@ animalSelect.appendChild(opt)
 
 function generateJSON(){
 
+const clothing=document.getElementById('clothing').value
 const location=document.getElementById('location').value
 const animal=document.getElementById('animal').value
 const animalDesc=animalDB[animal]
@@ -165,14 +176,14 @@ metadata:{
 },
 
 video_analysis:{
-subject:"A young woman with long brown hair and glasses wearing an olive green adventure shirt and lightweight headset",
+subject:`A young woman with long brown hair and glasses wearing ${clothing} and a lightweight headset`,
 setting:location,
 background_elements:`${animal} described as ${animalDesc} ${behavior}`,
 camera_movement:camera
 },
 
 ai_generation_prompt:{
-text_to_video_prompt:`Cinematic ${shot} video of a young woman with long brown hair and glasses wearing an olive green adventure shirt and headset exploring ${location}. The camera performs ${camera}. Behind her there is ${animal} described as ${animalDesc} ${behavior}. Lighting condition is ${lighting}. Environmental effect: ${effects}. Highly realistic wildlife behavior, photorealistic animal anatomy, cinematic nature documentary style. Visual style ${style}.`,
+text_to_video_prompt:`Cinematic ${shot} video of a young woman with long brown hair and glasses wearing ${clothing} and a lightweight headset exploring ${location}. The camera performs ${camera}. Behind her there is ${animal} described as ${animalDesc} ${behavior}. Lighting condition is ${lighting}. Environmental effect: ${effects}. Highly realistic wildlife behavior, photorealistic animal anatomy, cinematic nature documentary style. Visual style ${style}.`,
 
 negative_prompt:"blurry, distorted animals, incorrect anatomy, cartoon style, anime style, unrealistic animals, low resolution",
 

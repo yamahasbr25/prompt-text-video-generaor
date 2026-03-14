@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ocean AI Generator V2</title>
+
+<style>
+body{font-family:Arial;background:#020617;color:#e5e7eb;margin:0;padding:30px}
+.container{max-width:1200px;margin:auto}
+.card{background:#0f172a;border-radius:14px;padding:24px;margin-bottom:20px;box-shadow:0 10px 25px rgba(0,0,0,0.4)}
+select,button{width:100%;padding:10px;margin-top:10px;border-radius:8px;border:none;font-size:14px}
+select{background:#1e293b;color:white}
+button{cursor:pointer}
+.generate{background:#2563eb;color:white}
+.copy{background:#10b981;color:white;margin-top:10px}
+.random{background:#f59e0b;color:white;margin-top:10px}
+textarea{width:100%;height:430px;margin-top:10px;background:#020617;color:#22c55e;border-radius:10px;padding:10px;border:none;font-family:monospace}
+label{font-weight:bold;margin-top:12px;display:block}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Ocean AI Generator V2</h1>
+
+<div class="card">
+
+<label>Diver Outfit</label>
+<select id="outfit">
+<option value="a professional scuba diving suit">Professional Scuba Suit</option>
+<option value="a lightweight scuba diving suit">Light Scuba Suit</option>
+<option value="a tropical diving rash guard and shorts">Rash Guard Outfit</option>
+<option value="a black diving vest with diving shorts">Diving Vest Outfit</option>
+<option value="a tropical bikini">Bikini</option>
+<option value="a colorful beach bikini">Beach Bikini</option>
+</select>
+
+<label>Diver Action</label>
+<select id="action">
+<option value="slowly swimming through the water">Swimming Slowly</option>
+<option value="exploring a coral reef">Exploring Reef</option>
+<option value="filming marine wildlife">Filming Wildlife</option>
+<option value="floating calmly underwater">Floating Calmly</option>
+<option value="reaching toward nearby fish">Reaching Fish</option>
+</select>
+
+<label>Ocean Location</label>
+<select id="location">
+<option value="a colorful tropical coral reef">Coral Reef</option>
+<option value="a deep blue open ocean">Open Ocean</option>
+<option value="a mysterious deep sea trench">Deep Sea Trench</option>
+<option value="an underwater cave system">Underwater Cave</option>
+<option value="a crystal clear tropical lagoon">Blue Lagoon</option>
+</select>
+
+<label>Water Conditions</label>
+<select id="water">
+<option value="crystal clear tropical water">Crystal Clear Water</option>
+<option value="deep dark ocean water">Deep Dark Water</option>
+<option value="murky deep sea water">Murky Water</option>
+<option value="sunlit shallow tropical water">Sunlit Shallow Water</option>
+</select>
+
+<label>Ocean Creature</label>
+<select id="animal"></select>
+
+<label>Creature Size</label>
+<select id="size">
+<option value="massive giant">Giant</option>
+<option value="colossal">Colossal</option>
+<option value="titanic">Titanic</option>
+<option value="prehistoric colossal">Prehistoric Colossal</option>
+</select>
+
+<label>Animal Behavior</label>
+<select id="behavior">
+<option value="swimming slowly nearby">Swimming Nearby</option>
+<option value="passing behind the diver">Passing Behind</option>
+<option value="circling the diver curiously">Circling Diver</option>
+<option value="emerging from the deep ocean darkness">Emerging From Deep</option>
+<option value="swimming directly toward the diver">Approaching Diver</option>
+</select>
+
+<label>Cinematic Camera</label>
+<select id="camera">
+<option value="a handheld GoPro POV underwater camera">GoPro POV</option>
+<option value="an ultra wide cinematic underwater lens">Ultra Wide Lens</option>
+<option value="a cinematic IMAX underwater camera">IMAX Camera</option>
+<option value="a smooth underwater drone tracking shot">Underwater Drone</option>
+</select>
+
+<label>Lighting</label>
+<select id="lighting">
+<option value="sunlight rays piercing through the water">Sun Rays</option>
+<option value="dramatic deep sea lighting">Deep Sea Light</option>
+<option value="bright tropical underwater lighting">Tropical Light</option>
+</select>
+
+<label>Environmental Effects</label>
+<select id="effects">
+<option value="floating bubbles rising through the water">Bubbles</option>
+<option value="a large swarm of tropical fish">Fish Swarm</option>
+<option value="floating plankton particles">Plankton</option>
+<option value="none">None</option>
+</select>
+
+<label>Video Duration</label>
+<select id="duration">
+<option value="5">5 seconds</option>
+<option value="8">8 seconds</option>
+<option value="12">12 seconds</option>
+<option value="15">15 seconds</option>
+</select>
+
+<label>Film Style</label>
+<select id="style">
+<option value="BBC Planet Earth wildlife documentary">BBC Planet Earth</option>
+<option value="National Geographic underwater documentary">National Geographic</option>
+<option value="epic Hollywood ocean adventure film">Hollywood Ocean</option>
+<option value="IMAX underwater cinematic film">IMAX</option>
+</select>
+
+<button class="generate" onclick="generateJSON()">Generate JSON Prompt</button>
+<button class="random" onclick="randomPrompt()">🎲 Random Ocean Scene</button>
+
+</div>
+
+<div class="card">
+
+<label>Generated JSON</label>
+<textarea id="output"></textarea>
+<button class="copy" onclick="copyJSON()">Copy JSON</button>
+
+</div>
+
+</div>
+
+<script>
+
+const animalDB={
+
+"Blue Whale":"a gigantic blue whale",
+"Whale Shark":"a giant whale shark",
+"Great White Shark":"a powerful great white shark",
+"Manta Ray":"a huge manta ray",
+"Giant Squid":"a mysterious giant squid",
+
+/* prehistoric */
+
+"Megalodon":"an enormous prehistoric megalodon shark",
+"Mosasaurus":"a gigantic prehistoric mosasaurus sea reptile",
+"Dunkleosteus":"a massive armored prehistoric fish",
+"Liopleurodon":"a giant prehistoric marine predator",
+"Basilosaurus":"a massive prehistoric whale predator",
+"Leedsichthys":"the largest prehistoric fish ever",
+"Helicoprion":"a strange prehistoric shark with spiral teeth",
+"Elasmosaurus":"a long necked prehistoric marine reptile",
+"Kronosaurus":"a colossal prehistoric pliosaur predator"
+
+}
+
+const animalSelect=document.getElementById("animal")
+
+Object.keys(animalDB).forEach(name=>{
+const opt=document.createElement("option")
+opt.value=name
+opt.textContent=name
+animalSelect.appendChild(opt)
+})
+
+function generateJSON(){
+
+const outfit=document.getElementById('outfit').value
+const action=document.getElementById('action').value
+const location=document.getElementById('location').value
+const water=document.getElementById('water').value
+const animal=document.getElementById('animal').value
+const animalDesc=animalDB[animal]
+const size=document.getElementById('size').value
+const behavior=document.getElementById('behavior').value
+const camera=document.getElementById('camera').value
+const lighting=document.getElementById('lighting').value
+const effects=document.getElementById('effects').value
+const duration=document.getElementById('duration').value
+const style=document.getElementById('style').value
+
+const json={
+
+metadata:{
+title:"Ocean AI Generator V2",
+generator:"Ocean Viral Scene Engine"
+},
+
+video_analysis:{
+subject:`A diver wearing ${outfit} ${action}`,
+setting:`${location} with ${water}`,
+background_elements:`A ${size} ${animalDesc} ${behavior}`,
+camera_movement:camera
+},
+
+ai_generation_prompt:{
+
+text_to_video_prompt:`Ultra realistic cinematic underwater scene of a diver wearing ${outfit} ${action} in ${location}. The water condition is ${water}. Behind the diver appears a ${size} ${animalDesc} ${behavior}. The creature looks enormous compared to the diver, creating a sense of scale and danger. The camera uses ${camera}. Lighting condition is ${lighting}. Environmental effects include ${effects}. Hyper realistic marine environment, volumetric sunlight rays, underwater caustics, high dynamic range lighting, ultra detailed, viral cinematic scale ocean creature footage. Style: ${style}.`,
+
+negative_prompt:"blurry, distorted anatomy, cartoon style, anime style, unrealistic creature design",
+
+technical_specs:{
+aspect_ratio:"9:16",
+resolution:"4K",
+frame_rate:"30fps",
+duration_seconds:Number(duration)
+}
+
+}
+
+}
+
+document.getElementById('output').value=JSON.stringify(json,null,2)
+
+}
+
+function randomPrompt(){
+
+const selects=document.querySelectorAll('select')
+
+selects.forEach(select=>{
+select.selectedIndex=Math.floor(Math.random()*select.options.length)
+})
+
+generateJSON()
+
+}
+
+function copyJSON(){
+
+const text=document.getElementById('output')
+
+text.select()
+
+document.execCommand('copy')
+
+alert("JSON copied")
+
+}
+
+</script>
+
+</body>
+</html>

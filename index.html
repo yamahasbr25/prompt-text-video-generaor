@@ -139,12 +139,21 @@ display:block
 <option value="camouflage tactical shirt">Camouflage</option>
 </select>
 
+<label>Facial Expression</label>
+<select id="expression">
+<option value="" selected>None</option>
+<option value="with a serious expression">Serious</option>
+<option value="with a relaxed expression">Relaxed</option>
+<option value="with a confident expression">Confident</option>
+</select>
+
 <label>Pose</label>
 <select id="pose">
 <option value="standing and giving a military salute">Salute</option>
 <option value="holding the camera like a selfie vlog">Selfie</option>
 <option value="walking confidently forward">Walking</option>
 <option value="pointing toward the fighter jets behind her" selected>Pointing Jet</option>
+<option value="standing with both hands on her hips in a confident stance">Hands on Hips (Confident)</option>
 </select>
 
 <label>Camera Movement</label>
@@ -246,6 +255,7 @@ const formation=document.getElementById('formation').value
 const jetCount=document.getElementById('jetCount').value
 const glasses=document.getElementById('glasses').value
 const clothes=document.getElementById('clothes').value
+const expression=document.getElementById('expression').value
 const pose=document.getElementById('pose').value
 const camera=document.getElementById('camera').value
 const shot=document.getElementById('shot').value
@@ -263,7 +273,7 @@ generator:"AI Military Scene Builder"
 
 video_analysis:{
 
-subject:`A young woman with long brown hair ${glasses ? glasses : ""} wearing a cropped ${clothes} and tactical headset, ${pose}`,
+subject:`A young woman with long brown hair ${glasses ? glasses : ""} ${expression ? expression : ""} wearing a cropped ${clothes} and tactical headset, ${pose}`,
 
 setting:location,
 
@@ -277,7 +287,7 @@ ai_generation_prompt:{
 
 text_to_video_prompt:
 
-`Cinematic ${shot} video of a young woman with long brown hair ${glasses ? glasses : ""} wearing a cropped ${clothes} and tactical headset, ${pose}. 
+`Cinematic ${shot} video of a young woman with long brown hair ${glasses ? glasses : ""} ${expression ? expression : ""} wearing a cropped ${clothes} and tactical headset, ${pose}. 
 
 The camera performs ${camera}. 
 

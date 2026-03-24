@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Ocean Diving Scene Builder</title>
-
 <style>
 body{font-family:Arial,Helvetica,sans-serif;background:#020617;color:#e5e7eb;margin:0;padding:30px}
 .container{max-width:1200px;margin:auto}
@@ -19,10 +18,8 @@ textarea{width:100%;height:380px;margin-top:10px;background:#020617;color:#22c55
 h1{margin-bottom:10px}
 label{font-weight:bold;margin-top:12px;display:block}
 </style>
-
 </head>
 <body>
-
 <div class="container">
 <h1>AI Ocean Diving Scene Builder</h1>
 <p>Create cinematic underwater diving prompts for AI video (Sora / Runway / Kling).</p>
@@ -45,28 +42,24 @@ label{font-weight:bold;margin-top:12px;display:block}
 <option value="professional scuba diving pants">Scuba Pants</option>
 </select>
 
-<!-- UPDATED ACCESSORIES -->
 <label>Diving Accessories</label>
 <select id="accessories">
-<option value="a professional scuba oxygen tank and a high clarity tempered glass diving mask with anti-fog coating and adjustable silicone strap">Scuba Tank + Pro Mask</option>
-<option value="a detailed snorkeling mask with anti-fog lens and breathing snorkel tube">Mask + Snorkel</option>
-<option value="full scuba diving gear including oxygen tank, fins, and a high visibility tempered glass diving mask">Full Scuba Gear</option>
-<option value="a diving mask with crystal clear tempered glass and an underwater action camera">Mask + Camera</option>
+<option value="a professional scuba oxygen tank and a high-clarity tempered glass diving mask with anti-fog coating and adjustable silicone strap">Scuba Tank + Detailed Mask</option>
+<option value="a high-clarity tempered glass diving mask with anti-fog coating and a snorkel with breathing valve">Detailed Mask + Snorkel</option>
+<option value="full scuba diving gear with oxygen tank, fins, and a professional tempered glass diving mask with anti-fog lens">Full Scuba Gear</option>
+<option value="a high-clarity diving mask with anti-fog glass and an underwater camera">Mask + Camera</option>
 <option value="none">None</option>
 </select>
 
-<!-- UPDATED EXPRESSION -->
 <label>Facial Expression</label>
 <select id="expression">
-<option value="neutral expression">Non Expression</option>
-<option value="smart calm expression with focused eyes">Smart Expression</option>
+<option value="smart facial expression with natural emotional reaction">Smart Expression</option>
 <option value="smiling with excitement">Smiling</option>
 <option value="looking surprised and amazed">Surprised</option>
 <option value="looking shocked by the marine life">Shocked</option>
 <option value="excited and curious">Excited</option>
 </select>
 
-<!-- DEFAULT OPEN OCEAN -->
 <label>Ocean Location</label>
 <select id="location">
 <option value="a colorful tropical coral reef">Coral Reef</option>
@@ -79,7 +72,6 @@ label{font-weight:bold;margin-top:12px;display:block}
 <label>Marine Animal Database</label>
 <select id="animal"></select>
 
-<!-- DEFAULT PASSING BEHIND -->
 <label>Animal Behavior</label>
 <select id="behavior">
 <option value="swimming gracefully nearby">Swimming Nearby</option>
@@ -89,22 +81,20 @@ label{font-weight:bold;margin-top:12px;display:block}
 <option value="approaching the diver curiously">Approaching</option>
 </select>
 
-<!-- SMART CAMERA -->
 <label>Camera Movement</label>
 <select id="camera">
-<option value="an intelligent smooth cinematic movement that dynamically follows the subject and adjusts framing automatically" selected>Smart Movement</option>
+<option value="a smart dynamic underwater camera movement with cinematic stabilization">Smart Movement</option>
 <option value="a handheld underwater selfie camera">Underwater Selfie</option>
 <option value="a smooth underwater tracking shot">Tracking Shot</option>
 <option value="a cinematic drone like underwater camera">Underwater Cinematic</option>
 <option value="a slow orbit underwater camera movement">Orbit Camera</option>
 </select>
 
-<!-- DEFAULT WIDE -->
 <label>Shot Composition</label>
 <select id="shot">
 <option value="close-up underwater selfie framing">Close-up</option>
 <option value="medium underwater vlog framing">Medium Shot</option>
-<option value="wide cinematic underwater wildlife shot" selected>Wide Shot</option>
+<option value="wide cinematic underwater wildlife shot" selected>Wide Short</option>
 </select>
 
 <label>Lighting</label>
@@ -213,16 +203,14 @@ metadata:{
 },
 
 video_analysis:{
-subject:`A 20-year-old young American woman with shoulder-length orange hair, natural flowing texture,
-light tan white-brown skin tone, proportional athletic body, medium natural body proportions,
-fit and healthy appearance, with ${expression}, wearing ${clothing}, ${pants}, and ${accessories}`,
+subject:`A young woman with long brown hair and glasses ${expression}, wearing ${clothing}, ${pants}, and ${accessories}`,
 setting:location,
 background_elements:`${animal} described as ${animalDesc} ${behavior}`,
 camera_movement:camera
 },
 
 ai_generation_prompt:{
-text_to_video_prompt:`Cinematic ${shot} underwater video of a young woman with long brown hair and glasses, with ${expression}, wearing ${clothing}, ${pants}, and ${accessories}, diving in ${location}. The camera performs ${camera}. Nearby there is ${animal} described as ${animalDesc} ${behavior}. Lighting condition is ${lighting}. Environmental effect: ${effects}. Photorealistic underwater environment, realistic marine life anatomy, cinematic ocean wildlife documentary style. Visual style ${style}.`,
+text_to_video_prompt:`Cinematic ${shot} underwater video of a young woman with long brown hair and glasses ${expression}, wearing ${clothing}, ${pants}, and ${accessories}, diving in ${location}. The camera performs ${camera}. Nearby there is ${animal} described as ${animalDesc} ${behavior}. Lighting condition is ${lighting}. Environmental effect: ${effects}. Photorealistic underwater environment, realistic marine life anatomy, cinematic ocean wildlife documentary style. Visual style ${style}.`,
 
 negative_prompt:"blurry, distorted fish, unrealistic marine anatomy, cartoon style, anime style, low resolution",
 
@@ -236,7 +224,8 @@ style:style
 }
 }
 
-document.getElementById('output').value=JSON.stringify(json,null,2)
+const formatted=JSON.stringify(json,null,2)
+document.getElementById('output').value=formatted
 }
 
 function randomPrompt(){
@@ -244,6 +233,7 @@ const selects=document.querySelectorAll('select')
 selects.forEach(select=>{
 select.selectedIndex=Math.floor(Math.random()*select.options.length)
 })
+
 generateJSON()
 }
 

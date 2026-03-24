@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Ocean Diving Scene Builder</title>
+
+<style>
+body{font-family:Arial,Helvetica,sans-serif;background:#020617;color:#e5e7eb;margin:0;padding:30px}
+.container{max-width:1200px;margin:auto}
+.card{background:#0f172a;border-radius:14px;padding:24px;margin-bottom:20px;box-shadow:0 10px 25px rgba(0,0,0,0.4)}
+select,button{width:100%;padding:10px;margin-top:10px;border-radius:8px;border:none;font-size:14px}
+select{background:#1e293b;color:#fff}
+button{cursor:pointer}
+.generate{background:#2563eb;color:white}
+.copy{background:#10b981;color:white;margin-top:10px}
+.random{background:#f59e0b;color:white;margin-top:10px}
+textarea{width:100%;height:380px;margin-top:10px;background:#020617;color:#22c55e;border-radius:10px;padding:10px;border:none;font-family:monospace}
+h1{margin-bottom:10px}
+label{font-weight:bold;margin-top:12px;display:block}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+<h1>AI Ocean Diving Scene Builder</h1>
+<p>Create cinematic underwater diving prompts for AI video (Sora / Runway / Kling).</p>
+
+<div class="card">
+
+<label>Diver Top Clothing</label>
+<select id="clothing">
+<option value="a black diving tank top">Diving Tank Top</option>
+<option value="a lightweight scuba diving suit">Light Scuba Suit</option>
+<option value="a tropical diving rash guard">Rash Guard</option>
+<option value="a sleeveless diving vest">Diving Vest</option>
+</select>
+
+<label>Diver Bottom Wear</label>
+<select id="pants">
+<option value="black diving shorts">Diving Shorts</option>
+<option value="neoprene diving leggings">Diving Leggings</option>
+<option value="lightweight swim shorts">Swim Shorts</option>
+<option value="professional scuba diving pants">Scuba Pants</option>
+</select>
+
+<!-- UPDATED ACCESSORIES -->
+<label>Diving Accessories</label>
+<select id="accessories">
+<option value="a professional scuba oxygen tank and a high clarity tempered glass diving mask with anti-fog coating and adjustable silicone strap">Scuba Tank + Pro Mask</option>
+<option value="a detailed snorkeling mask with anti-fog lens and breathing snorkel tube">Mask + Snorkel</option>
+<option value="full scuba diving gear including oxygen tank, fins, and a high visibility tempered glass diving mask">Full Scuba Gear</option>
+<option value="a diving mask with crystal clear tempered glass and an underwater action camera">Mask + Camera</option>
+<option value="none">None</option>
+</select>
+
+<!-- UPDATED EXPRESSION -->
+<label>Facial Expression</label>
+<select id="expression">
+<option value="neutral expression">Non Expression</option>
+<option value="smart calm expression with focused eyes">Smart Expression</option>
+<option value="smiling with excitement">Smiling</option>
+<option value="looking surprised and amazed">Surprised</option>
+<option value="looking shocked by the marine life">Shocked</option>
+<option value="excited and curious">Excited</option>
+</select>
+
+<!-- DEFAULT OPEN OCEAN -->
+<label>Ocean Location</label>
+<select id="location">
+<option value="a colorful tropical coral reef">Coral Reef</option>
+<option value="a deep blue open ocean" selected>Open Ocean</option>
+<option value="a coral reef canyon filled with fish">Coral Canyon</option>
+<option value="a crystal clear lagoon with marine life">Blue Lagoon</option>
+<option value="a mysterious deep sea environment">Deep Sea</option>
+</select>
+
+<label>Marine Animal Database</label>
+<select id="animal"></select>
+
+<!-- DEFAULT PASSING BEHIND -->
+<label>Animal Behavior</label>
+<select id="behavior">
+<option value="swimming gracefully nearby">Swimming Nearby</option>
+<option value="slowly passing behind the diver" selected>Passing Behind</option>
+<option value="circling curiously">Circling</option>
+<option value="swimming together in a group">Swimming School</option>
+<option value="approaching the diver curiously">Approaching</option>
+</select>
+
+<!-- SMART CAMERA -->
+<label>Camera Movement</label>
+<select id="camera">
+<option value="an intelligent smooth cinematic movement that dynamically follows the subject and adjusts framing automatically" selected>Smart Movement</option>
+<option value="a handheld underwater selfie camera">Underwater Selfie</option>
+<option value="a smooth underwater tracking shot">Tracking Shot</option>
+<option value="a cinematic drone like underwater camera">Underwater Cinematic</option>
+<option value="a slow orbit underwater camera movement">Orbit Camera</option>
+</select>
+
+<!-- DEFAULT WIDE -->
+<label>Shot Composition</label>
+<select id="shot">
+<option value="close-up underwater selfie framing">Close-up</option>
+<option value="medium underwater vlog framing">Medium Shot</option>
+<option value="wide cinematic underwater wildlife shot" selected>Wide Shot</option>
+</select>
+
+<label>Lighting</label>
+<select id="lighting">
+<option value="sunlight rays piercing through the ocean water">Sun Rays</option>
+<option value="soft blue underwater lighting">Soft Blue</option>
+<option value="dramatic deep sea lighting">Deep Sea Light</option>
+<option value="bright tropical underwater lighting">Tropical Light</option>
+</select>
+
+<label>Environment Effects</label>
+<select id="effects">
+<option value="floating bubbles rising through the water">Bubbles</option>
+<option value="small tropical fish swimming around">Fish Swarm</option>
+<option value="floating plankton particles in the water">Plankton</option>
+<option value="none">None</option>
+</select>
+
+<label>Video Duration</label>
+<select id="duration">
+<option value="5">5 seconds</option>
+<option value="8">8 seconds</option>
+<option value="12">12 seconds</option>
+<option value="15">15 seconds</option>
+</select>
+
+<label>Visual Style</label>
+<select id="style">
+<option value="cinematic underwater nature film">Cinematic Ocean</option>
+<option value="marine wildlife documentary realism">Wildlife Documentary</option>
+<option value="epic cinematic ocean adventure">Ocean Adventure</option>
+</select>
+
+<button class="generate" onclick="generateJSON()">Generate JSON Prompt</button>
+<button class="random" onclick="randomPrompt()">🎲 Random Ocean Scene</button>
+
+</div>
+
+<div class="card">
+<label>Generated JSON</label>
+<textarea id="output"></textarea>
+<button class="copy" onclick="copyJSON()">Copy JSON</button>
+</div>
+
+</div>
+
+<script>
+
+const animalDB={
+"Whale":"a massive blue whale with enormous body and slow graceful movement",
+"Whale Shark":"a giant whale shark with spotted patterns swimming slowly",
+"Great White Shark":"a powerful great white shark with sharp teeth",
+"Hammerhead Shark":"a hammerhead shark with wide hammer shaped head",
+"Dolphin":"a playful dolphin swimming quickly through the water",
+"Orca":"a majestic orca whale with black and white body",
+"Giant Octopus":"a large octopus with long moving tentacles",
+"Sea Turtle":"a graceful sea turtle gliding underwater",
+"Manta Ray":"a huge manta ray with wide wings gliding underwater",
+"Stingray":"a smooth stingray resting and swimming near the seabed",
+"Jellyfish":"a glowing jellyfish floating gently",
+"Giant Squid":"a mysterious giant squid with long tentacles",
+"Seal":"a playful seal swimming curiously",
+"Sea Lion":"a sea lion spinning underwater",
+"Moray Eel":"a moray eel emerging from coral",
+"Barracuda":"a fast barracuda with sharp teeth",
+"Clownfish":"a colorful clownfish near coral",
+"Parrotfish":"a bright parrotfish swimming near reef",
+"School of Tuna":"a large school of tuna fish",
+"Swordfish":"a fast swordfish with long bill",
+"Blue Tang":"a bright blue tang fish",
+"Lionfish":"a dangerous lionfish with spiky fins",
+"Angelfish":"a colorful angelfish",
+"Pufferfish":"a small pufferfish with round body",
+"Seahorse":"a tiny seahorse floating near coral"
+}
+
+const animalSelect=document.getElementById("animal")
+Object.keys(animalDB).forEach(name=>{
+const opt=document.createElement("option")
+opt.value=name
+opt.textContent=name
+animalSelect.appendChild(opt)
+})
+
+function generateJSON(){
+
+const clothing=document.getElementById('clothing').value
+const pants=document.getElementById('pants').value
+const accessories=document.getElementById('accessories').value
+const expression=document.getElementById('expression').value
+const location=document.getElementById('location').value
+const animal=document.getElementById('animal').value
+const animalDesc=animalDB[animal]
+const behavior=document.getElementById('behavior').value
+const camera=document.getElementById('camera').value
+const shot=document.getElementById('shot').value
+const lighting=document.getElementById('lighting').value
+const effects=document.getElementById('effects').value
+const duration=document.getElementById('duration').value
+const style=document.getElementById('style').value
+
+const json={
+metadata:{
+ title:"AI Ocean Diving Scene",
+ generator:"AI Ocean Diving Scene Builder"
+},
+
+video_analysis:{
+subject:`A young woman with long brown hair and glasses, with ${expression}, wearing ${clothing}, ${pants}, and ${accessories}`,
+setting:location,
+background_elements:`${animal} described as ${animalDesc} ${behavior}`,
+camera_movement:camera
+},
+
+ai_generation_prompt:{
+text_to_video_prompt:`Cinematic ${shot} underwater video of a young woman with long brown hair and glasses, with ${expression}, wearing ${clothing}, ${pants}, and ${accessories}, diving in ${location}. The camera performs ${camera}. Nearby there is ${animal} described as ${animalDesc} ${behavior}. Lighting condition is ${lighting}. Environmental effect: ${effects}. Photorealistic underwater environment, realistic marine life anatomy, cinematic ocean wildlife documentary style. Visual style ${style}.`,
+
+negative_prompt:"blurry, distorted fish, unrealistic marine anatomy, cartoon style, anime style, low resolution",
+
+technical_specs:{
+aspect_ratio:"9:16",
+resolution:"4K",
+frame_rate:"30fps",
+duration_seconds:Number(duration),
+style:style
+}
+}
+}
+
+document.getElementById('output').value=JSON.stringify(json,null,2)
+}
+
+function randomPrompt(){
+const selects=document.querySelectorAll('select')
+selects.forEach(select=>{
+select.selectedIndex=Math.floor(Math.random()*select.options.length)
+})
+generateJSON()
+}
+
+function copyJSON(){
+const text=document.getElementById('output')
+text.select()
+document.execCommand('copy')
+alert('JSON copied')
+}
+
+</script>
+
+</body>
+</html>

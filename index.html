@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Military Scene Builder</title>
+<style>
+body{font-family:Arial,Helvetica,sans-serif;background:#0f172a;color:#e5e7eb;margin:0;padding:30px;}
+.container{max-width:1200px;margin:auto;}
+.card{background:#111827;border-radius:14px;padding:24px;margin-bottom:20px;box-shadow:0 10px 25px rgba(0,0,0,0.3)}
+select,button{width:100%;padding:10px;margin-top:10px;border-radius:8px;border:none;font-size:14px}
+select{background:#1f2937;color:#fff}
+button{cursor:pointer}
+.generate{background:#2563eb;color:white}
+.copy{background:#10b981;color:white;margin-top:10px}
+.random{background:#f59e0b;color:white;margin-top:10px}
+.output-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+textarea{width:100%;height:360px;margin-top:10px;background:#020617;color:#22c55e;border-radius:10px;padding:10px;border:none;font-family:monospace}
+label{font-weight:bold;margin-top:12px;display:block}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>AI Military Scene Builder</h1>
+<p>Cinematic prompt generator for AI video models.</p>
+
+<div class="card">
+<label>Location</label>
+<select id="location">
+<option value="a desert military airbase runway">Military Airbase Runway</option>
+<option value="the flight deck of a large aircraft carrier at sea">Aircraft Carrier</option>
+<option value="a coastal military airstrip near the ocean">Coastal Base</option>
+<option value="a frozen arctic military base covered with snow">Snow Base</option>
+<option value="a jungle military airstrip surrounded by dense forest">Jungle Base</option>
+<option value="a military base near a futuristic city skyline">City Military Base</option>
+</select>
+
+<label>Aircraft</label>
+<select id="aircraft"></select>
+
+<label>Aircraft Formation</label>
+<select id="formation">
+<option value="parked in a straight runway lineup">Runway Lineup</option>
+<option value="parked in a triangular squadron formation">Triangle Formation</option>
+<option value="taxiing slowly on the runway">Taxi Formation</option>
+<option value="flying overhead in tight formation">Flight Formation</option>
+</select>
+
+<label>Glasses</label>
+<select id="glasses">
+<option value="" selected>None</option>
+<option value="wearing clear glasses">Clear Glasses</option>
+<option value="wearing dark sunglasses">Dark Sunglasses</option>
+</select>
+
+<label>Clothing Color</label>
+<select id="clothes">
+<option value="olive green tactical shirt">Green</option>
+<option value="blue tactical shirt">Blue</option>
+<option value="brown tactical shirt">Brown</option>
+<option value="camouflage tactical shirt">Camouflage</option>
+</select>
+
+<label>Facial Expression</label>
+<select id="expression">
+<option value="" selected>None</option>
+<option value="with a serious expression">Serious</option>
+<option value="with a relaxed expression">Relaxed</option>
+<option value="with a confident expression">Confident</option>
+</select>
+
+<label>Pose</label>
+<select id="pose">
+<option value="auto" selected>Auto Smart</option>
+<option value="standing and giving a military salute">Salute</option>
+<option value="holding the camera like a selfie vlog">Selfie</option>
+<option value="walking confidently forward">Walking</option>
+<option value="pointing toward the fighter jets behind her">Pointing Jet</option>
+<option value="standing with both hands on her hips in a confident stance">Hands on Hips (Confident)</option>
+</select>
+
+<label>Camera Movement</label>
+<select id="camera">
+<option value="">None (Auto Smart)</option>
+<option value="a handheld selfie">Selfie</option>
+<option value="a handheld walking vlog style camera">Walking Vlog</option>
+<option value="a cinematic drone reveal rising upward">Drone Reveal</option>
+<option value="a dramatic cinematic orbit camera movement">Cinematic Orbit</option>
+</select>
+
+<label>Shot Composition</label>
+<select id="shot">
+<option value="close-up selfie framing">Close-up</option>
+<option value="medium vlog framing">Medium Shot</option>
+<option value="wide cinematic reveal" selected>Wide Shot</option>
+</select>
+
+<label>Lighting</label>
+<select id="lighting">
+<option value="bright midday sunlight">Midday Sun</option>
+<option value="golden hour sunset lighting">Golden Hour</option>
+<option value="overcast cinematic lighting">Overcast</option>
+<option value="dramatic night lighting with runway lights">Night Base</option>
+</select>
+
+<label>Environment Effects</label>
+<select id="effects">
+<option value="none" selected>None</option>
+<option value="heat haze rising from the runway">Jet Heat Haze</option>
+<option value="dust blowing across the runway">Dust Storm</option>
+<option value="light snow drifting through the air">Snow Particles</option>
+</select>
+
+<label>Video Duration</label>
+<select id="duration">
+<option value="5">5 seconds</option>
+<option value="8">8 seconds</option>
+<option value="12">12 seconds</option>
+<option value="15">15 seconds</option>
+</select>
+
+<label>Style</label>
+<select id="style">
+<option value="cinematic photorealistic film look">Cinematic</option>
+<option value="realistic war documentary">War Documentary</option>
+<option value="high budget hollywood action">Hollywood Action</option>
+</select>
+
+<button class="generate" onclick="generateJSON()">Generate JSON Prompt</button>
+<button class="random" onclick="randomPrompt()">🎲 Random Scene</button>
+</div>
+
+<div class="card">
+<div class="output-grid">
+<div>
+<label>Prompt 1 JSON</label>
+<textarea id="output1"></textarea>
+<button class="copy" onclick="copyJSON('output1')">Copy Prompt 1</button>
+</div>
+<div>
+<label>Prompt 2 JSON</label>
+<textarea id="output2"></textarea>
+<button class="copy" onclick="copyJSON('output2')">Copy Prompt 2</button>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+const aircraftDB={
+"F-22 Raptor":"stealth fighter with diamond wings and twin outward canted stabilizers",
+"F-35 Lightning II":"single engine stealth fighter with trapezoidal wings",
+"F-16 Fighting Falcon":"single engine fighter with bubble canopy",
+"F-15 Eagle":"large twin engine fighter with twin vertical tails",
+"F/A-18 Super Hornet":"naval fighter with rectangular intakes and twin tails",
+"Eurofighter Typhoon":"delta wing fighter with forward canards",
+"Su-27":"large flanker fighter with blended wing body",
+"Su-35":"advanced flanker with thrust vectoring",
+"Su-57":"stealth fighter with blended stealth fuselage",
+"J-20":"large stealth fighter with canards",
+"Mirage 2000":"single engine delta wing fighter",
+"MiG-21":"classic interceptor with delta wing",
+"F-14 Tomcat":"variable sweep wing naval fighter",
+"F-4 Phantom":"classic twin engine fighter"
+}
+
+const aircraftSelect=document.getElementById("aircraft")
+Object.keys(aircraftDB).forEach(name=>{
+const opt=document.createElement("option")
+opt.value=name
+opt.textContent=name
+aircraftSelect.appendChild(opt)
+})
+
+function getSmartCamera(pose, shot){
+if(pose.includes("selfie")) return "a handheld selfie"
+if(pose.includes("walking")) return "a handheld walking vlog style camera"
+if(pose.includes("salute")) return "a slow cinematic push-in camera movement"
+if(pose.includes("hands on her hips")) return "a low angle cinematic push-in emphasizing confidence"
+if(shot.includes("close-up")) return "a handheld selfie"
+if(shot.includes("medium")) return "a steady handheld vlog camera"
+if(shot.includes("wide")) return "a cinematic drone reveal rising upward"
+return "a cinematic orbit camera movement"
+}
+
+function generateJSON(){
+const location=document.getElementById('location').value
+const aircraft=document.getElementById('aircraft').value
+const aircraftDesc=aircraftDB[aircraft]
+const formation=document.getElementById('formation').value
+const jetCount="1" // FORCE 1 ONLY
+const glasses=document.getElementById('glasses').value
+const clothes=document.getElementById('clothes').value
+const expression=document.getElementById('expression').value
+let pose=document.getElementById('pose').value
+const selectedCamera=document.getElementById('camera').value
+const shot=document.getElementById('shot').value
+const lighting=document.getElementById('lighting').value
+const effects=document.getElementById('effects').value
+const duration=document.getElementById('duration').value
+const style=document.getElementById('style').value
+
+if(pose==="auto") pose="standing confidently facing the camera"
+
+const smartCamera = selectedCamera || getSmartCamera(pose, shot)
+
+const json1={
+metadata:{title:"AI Military Cinematic Scene",generator:"AI Military Scene Builder"},
+video_analysis:{
+subject:`A young woman with long brown hair ${glasses || ""} ${expression || ""} wearing a cropped ${clothes} and tactical headset, ${pose}`,
+setting:location,
+background_elements:`exactly 1 fighter aircraft resembling the ${aircraft} with ${aircraftDesc}, positioned behind her, parked and completely stationary in ${formation}, jets fully visible in frame`,
+camera_movement:smartCamera
+},
+ai_generation_prompt:{
+text_to_video_prompt:
+`Cinematic ${shot} video of a young woman with long brown hair ${glasses || ""} ${expression || ""} wearing a cropped ${clothes} and tactical headset, ${pose}.
+
+The camera performs ${smartCamera}.
+
+The scene takes place at ${location}.
+
+Behind her there is exactly 1 fighter aircraft resembling the ${aircraft} featuring ${aircraftDesc}, positioned clearly behind her, parked and completely stationary in ${formation}, fully visible in frame.
+
+IMPORTANT: Only ONE aircraft is allowed. The aircraft must remain completely still, no taxiing, no movement, no engine motion.
+
+Lighting condition is ${lighting}.
+
+Environmental effect: ${effects}.
+
+Photorealistic aviation geometry, cinematic lighting, realistic aircraft proportions, high detail environment, professional color grading, make sure your face is always facing the camera.
+
+Style ${style}.`,
+negative_prompt:"blurry, distorted aircraft, incorrect wing geometry, cartoon style, anime style, unrealistic aircraft shapes, low resolution, multiple aircraft, moving aircraft, taxiing, flying",
+technical_specs:{aspect_ratio:"9:16",resolution:"4K",frame_rate:"30fps",duration_seconds:Number(duration),style:style}
+}
+}
+
+const json2={
+metadata:{title:"AI Aircraft Pre-Takeoff Scene",generator:"AI Military Scene Builder"},
+video_analysis:{
+subject:`Single fighter aircraft preparing for takeoff with pilot inside cockpit`,
+setting:location,
+background_elements:`exactly 1 fighter aircraft resembling the ${aircraft} with ${aircraftDesc}, positioned on runway in ${formation}, engines starting and ready for takeoff, wheels not chocked, jets fully visible in frame`,
+camera_movement:"cinematic tracking and slow push-in focusing on aircraft and cockpit"
+},
+ai_generation_prompt:{
+text_to_video_prompt:
+`Cinematic ${shot} video focusing only on a single fighter aircraft preparing for takeoff.
+
+There is exactly 1 aircraft resembling the ${aircraft} featuring ${aircraftDesc}, positioned on the runway in ${formation}, fully visible in frame.
+
+The aircraft is stationary but in pre-takeoff state, engines starting, heat distortion visible, subtle vibration, ready for launch.
+
+Aircraft wheels are not chocked (no wheel blocks present).
+
+Pilot is clearly visible inside the cockpit wearing a flight helmet.
+
+No humans outside the aircraft.
+
+The scene takes place at ${location}.
+
+Camera moves smoothly with cinematic tracking and slow push-in to highlight aircraft and cockpit details.
+
+IMPORTANT: Only ONE aircraft is allowed. Aircraft remains in position (no taxiing or flying), only engine startup effects and subtle motion allowed.
+
+Lighting condition is ${lighting}.
+
+Environmental effect: ${effects}.
+
+Photorealistic aviation geometry, ultra detailed aircraft surfaces, realistic cockpit interiors, visible pilot, cinematic lighting, high detail environment, heat haze from engines, full aircraft visible in frame.
+
+Style ${style}.`,
+negative_prompt:"blurry, distorted aircraft, incorrect wing geometry, cartoon style, anime style, unrealistic aircraft shapes, low resolution, multiple aircraft, empty cockpit, no pilot, flying aircraft, takeoff motion, wheel chocks",
+technical_specs:{aspect_ratio:"9:16",resolution:"4K",frame_rate:"30fps",duration_seconds:Number(duration),style:style}
+}
+}
+
+// OUTPUT KE 2 KOLOM
+
+document.getElementById('output1').value=JSON.stringify(json1,null,2)
+document.getElementById('output2').value=JSON.stringify(json2,null,2)
+}
+
+function randomPrompt(){
+document.querySelectorAll('select').forEach(select=>{
+select.selectedIndex=Math.floor(Math.random()*select.options.length)
+})
+generateJSON()
+}
+
+function copyJSON(id){
+const text=document.getElementById(id)
+text.select()
+document.execCommand('copy')
+alert('JSON copied')
+}
+</script>
+</body>
+</html>
